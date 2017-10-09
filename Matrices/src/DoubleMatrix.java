@@ -353,16 +353,13 @@ public class DoubleMatrix {
 		// checks it the dimensions of this matrix are the same as the given
 		// matrix
 		// if not they are not equivalent matrices
-		if(other==null){
-			return false;
-		}
-		if(!(other instanceof DoubleMatrix)) 
-			return false;
-		
-		if (((DoubleMatrix) other).rowLength() != this.rowLength()
+		if(other==null 
+				|| !(other instanceof DoubleMatrix) 
+				||((DoubleMatrix) other).rowLength() != this.rowLength()
 				|| ((DoubleMatrix)other).colLength() != this.colLength()) {
+			
 			return false;
-		} 
+		}		
 		// checks every element at position (h,i) in this matrix and
 		// compares it to the
 		// element in the given matrix at (h,i)

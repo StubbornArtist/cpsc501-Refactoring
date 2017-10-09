@@ -363,9 +363,7 @@ public class Rational {
 	 */
 	@Override
 	public boolean equals(Object other) {
-		if (other == null)
-			return false;
-		if(!(other instanceof Rational)) 
+		if (other == null || !(other instanceof Rational))
 			return false;
 		
 		return denominator == ((Rational)other).getDenominator()

@@ -359,17 +359,12 @@ public class RationalMatrix {
 		// checks it the dimensions of this matrix are the same as the given
 		// matrix
 		// if not they are not equivalent matrices
-		if(other==null){
+		if(other==null || !(other instanceof RationalMatrix) 
+				|| ((RationalMatrix) other).rowLength() != this.rowLength()
+				|| ((RationalMatrix)other).colLength() != this.colLength()){
+			
 			return false;
-		}
-		if(!(other instanceof RationalMatrix)) 
-			return false;
-		
-		if (((RationalMatrix) other).rowLength() != this.rowLength()
-				|| ((RationalMatrix)other).colLength() != this.colLength()) {
-			return false;
-		} 
-		
+		}		
 		// checks every element at position (h,i) in this matrix and
 		// compares it to the
 		// element in the given matrix at (h,i)
