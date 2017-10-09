@@ -65,9 +65,6 @@ public class Rational {
 	 * @return Rational
 	 */
 	public static Rational add(Rational r1, Rational r2) {
-		if (r1 == null || r2 == null) {
-			throw new NullPointerException();
-		}
 		// multiplies to get denominator
 		int d = r1.getDenominator() * r2.getDenominator();
 		// computes the numerators to be summed
@@ -87,9 +84,6 @@ public class Rational {
 	 * @return Rational
 	 */
 	public static Rational subtract(Rational r1, Rational r2) {
-		if (r1 == null || r2 == null) {
-			throw new NullPointerException();
-		}
 		// multiplies to get denominator
 		int d = r1.getDenominator() * r2.getDenominator();
 		// computes the numerators to be subtracted
@@ -109,9 +103,7 @@ public class Rational {
 	 * @return Rational
 	 */
 	public static Rational multiply(Rational r1, Rational r2) {
-		if (r1 == null || r2 == null) {
-			throw new NullPointerException();
-		}
+		
 		return new Rational(r1.getNumerator() * r2.getNumerator(),
 				r1.getDenominator() * r2.getDenominator());
 	}
@@ -126,9 +118,6 @@ public class Rational {
 	 * @return Rational
 	 */
 	public static Rational divide(Rational r1, Rational r2){
-		if (r1 == null || r2 == null) {
-			throw new NullPointerException();
-		}
 		if(r2.equals(new Rational(0))){
 			throw new ZeroDenominatorException("Denominator cannot be zero");
 		}
@@ -146,9 +135,7 @@ public class Rational {
 	 */
 
 	public static Rational reciprocate(Rational r) {
-		if (r == null) {
-			throw new NullPointerException();
-		}
+
 		return new Rational(r.getDenominator(), r.getNumerator());
 
 	}
@@ -161,9 +148,7 @@ public class Rational {
 	 * @return Rational
 	 */
 	public static Rational negate(Rational r) {
-		if (r == null) {
-			throw new NullPointerException();
-		}
+
 		return new Rational(-1 * r.getNumerator(), r.getDenominator());
 	}
 
