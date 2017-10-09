@@ -159,10 +159,8 @@ public class RationalMatrix {
 	 *         element in m
 	 */
 	public static RationalMatrix multiply(RationalMatrix m, Rational r) {
-		// scalar multiplication
-		RationalMatrix temp = null;
 		// creates new rational matrix of the same dimensions
-		temp = new RationalMatrix(m.rowLength(), m.colLength());
+		RationalMatrix temp = new RationalMatrix(m.rowLength(), m.colLength());
 		// multiplies the rational number at each position in the matrix by the
 		// scalar
 		for (int h = 0; h < m.rowLength(); h++) {
@@ -207,9 +205,8 @@ public class RationalMatrix {
 	 * @return RationalMatrix the negation of the original matrix
 	 */
 	public static RationalMatrix negate(RationalMatrix m) {
-		RationalMatrix temp = null;
 		// creates new rational matrix of the same dimensions
-		temp = new RationalMatrix(m.rowLength(), m.colLength());
+		 RationalMatrix temp = new RationalMatrix(m.rowLength(), m.colLength());
 		// negates every element
 		for (int h = 0; h < m.rowLength(); h++) {
 			for (int i = 0; i < m.colLength(); i++) {
@@ -367,7 +364,6 @@ public class RationalMatrix {
 	 */
 	@Override
 	public boolean equals(Object other) {
-		boolean same = true;
 		// checks it the dimensions of this matrix are the same as the given
 		// matrix
 		// if not they are not equivalent matrices
@@ -379,21 +375,21 @@ public class RationalMatrix {
 		
 		if (((RationalMatrix) other).rowLength() != this.rowLength()
 				|| ((RationalMatrix)other).colLength() != this.colLength()) {
-			same = false;
-		} else {
-			// checks every element at position (h,i) in this matrix and
-			// compares it to the
-			// element in the given matrix at (h,i)
-			for (int h = 0; h < matrix.length; h++) {
-				for (int i = 0; i < matrix[h].length; i++) {
-					if (!this.getAt(h, i).equals(((RationalMatrix)other).getAt(h, i))) {
-						same = false;
-					}
+			return false;
+		} 
+		
+		// checks every element at position (h,i) in this matrix and
+		// compares it to the
+		// element in the given matrix at (h,i)
+		for (int h = 0; h < matrix.length; h++) {
+			for (int i = 0; i < matrix[h].length; i++) {
+				if (!this.getAt(h, i).equals(((RationalMatrix)other).getAt(h, i))) {
+					return false;
 				}
 			}
-
 		}
-		return same;
+		
+		return true;
 	}
 
 	/**

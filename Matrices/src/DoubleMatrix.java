@@ -154,10 +154,8 @@ public class DoubleMatrix {
 	 *         element in m
 	 */
 	public static DoubleMatrix multiply(DoubleMatrix m, double d) {
-		// scalar multiplication
-		DoubleMatrix temp = null;
 		// creates new double matrix of the same dimensions
-		temp = new DoubleMatrix(m.rowLength(), m.colLength());
+		DoubleMatrix temp = new DoubleMatrix(m.rowLength(), m.colLength());
 		// multiplies the double at each position in the matrix by the
 		// scalar
 		for (int h = 0; h < m.rowLength(); h++) {
@@ -202,9 +200,8 @@ public class DoubleMatrix {
 	 * @return DoubleMatrix the negation of the original matrix
 	 */
 	public static DoubleMatrix negate(DoubleMatrix m) {
-		DoubleMatrix temp = null;
 		// creates new double matrix of the same dimensions
-		temp = new DoubleMatrix(m.rowLength(), m.colLength());
+		DoubleMatrix temp = new DoubleMatrix(m.rowLength(), m.colLength());
 		// negates every element
 		for (int h = 0; h < m.rowLength(); h++) {
 			for (int i = 0; i < m.colLength(); i++) {
@@ -362,7 +359,6 @@ public class DoubleMatrix {
 	 */
 	@Override
 	public boolean equals(Object other) {
-		boolean same = true;
 		// checks it the dimensions of this matrix are the same as the given
 		// matrix
 		// if not they are not equivalent matrices
@@ -374,21 +370,20 @@ public class DoubleMatrix {
 		
 		if (((DoubleMatrix) other).rowLength() != this.rowLength()
 				|| ((DoubleMatrix)other).colLength() != this.colLength()) {
-			same = false;
-		} else {
-			// checks every element at position (h,i) in this matrix and
-			// compares it to the
-			// element in the given matrix at (h,i)
-			for (int h = 0; h < matrix.length; h++) {
-				for (int i = 0; i < matrix[h].length; i++) {
-					if (this.getAt(h, i) != ((DoubleMatrix)other).getAt(h, i)) {
-						same = false;
-					}
+			return false;
+		} 
+		// checks every element at position (h,i) in this matrix and
+		// compares it to the
+		// element in the given matrix at (h,i)
+		for (int h = 0; h < matrix.length; h++) {
+			for (int i = 0; i < matrix[h].length; i++) {
+				if (this.getAt(h, i) != ((DoubleMatrix)other).getAt(h, i)) {
+					return false;
 				}
 			}
-
 		}
-		return same;
+		
+		return true;
 	}
 
 	/**
