@@ -88,8 +88,8 @@ public class RationalMatrix {
 	 */
 	public static RationalMatrix add(RationalMatrix m1, RationalMatrix m2) {
 		// checks if the row and column length of the two matrices is the same
-		if (m1.rowLength() != m2.rowLength()){
-			throw new IncompatibleMatrixException("Incompatible number of rows");
+		if (m1.incompatibleDimensions(m2)){
+			throw new IncompatibleMatrixException("Incompatible dimensions");
 		} 
 		// creates new rational matrix of the same dimensions
 		RationalMatrix temp = new RationalMatrix(m1.rowLength(), m1.colLength());
@@ -119,11 +119,8 @@ public class RationalMatrix {
 	public static RationalMatrix subtract(RationalMatrix m1, RationalMatrix m2) {
 
 		// checks if the row and column length of the two matrices is the same
-		if (m1.rowLength() != m2.rowLength()
-				|| m1.colLength() != m2.colLength()) {
-			
+		if (m1.incompatibleDimensions(m2)) {
 			throw new IncompatibleMatrixException("Incompatible dimensions");
-		
 		} 
 		// creates new rational matrix of the same dimensions
 		RationalMatrix temp = new RationalMatrix(m1.rowLength(), m1.colLength());
@@ -258,6 +255,21 @@ public class RationalMatrix {
 		setMatrix(negate(this).getMatrix());
 
 	}
+	
+	/**
+	 * Indicate whether this matrix has the same number of rows and columns as another
+	 * @param m 
+	 * 			the other matrix to compare with
+	 * @return
+	 * 			boolean : true or false
+	 */
+	public boolean incompatibleDimensions(RationalMatrix m) {
+		
+		return m.rowLength() != rowLength()
+				|| m.colLength() != colLength();
+		
+	}
+
 
 	/**
 	 * Sets the values of the matrix in RationalMatrix to those in the given
@@ -360,8 +372,7 @@ public class RationalMatrix {
 		// matrix
 		// if not they are not equivalent matrices
 		if(other==null || !(other instanceof RationalMatrix) 
-				|| ((RationalMatrix) other).rowLength() != this.rowLength()
-				|| ((RationalMatrix)other).colLength() != this.colLength()){
+				|| incompatibleDimensions((RationalMatrix) other)){
 			
 			return false;
 		}		

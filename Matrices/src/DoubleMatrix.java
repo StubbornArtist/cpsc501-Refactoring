@@ -86,8 +86,8 @@ public class DoubleMatrix {
 	public static DoubleMatrix add(DoubleMatrix m1, DoubleMatrix m2){
 
 		// checks if the row and column length of the two matrices is the same
-		if (m1.rowLength() != m2.rowLength()){
-			throw new IncompatibleMatrixException("Incompatible number of rows");
+		if (m1.incompatibleDimensions(m2)) {
+			throw new IncompatibleMatrixException("Incompatible dimensions");
 		} 
 			// creates new double matrix of the same dimensions
 		DoubleMatrix temp = new DoubleMatrix(m1.rowLength(), m1.colLength());
@@ -115,10 +115,8 @@ public class DoubleMatrix {
 	 */
 	public static DoubleMatrix subtract(DoubleMatrix m1, DoubleMatrix m2) {
 		// checks if the row and column length of the two matrices is the same
-		if (m1.rowLength() != m2.rowLength()
-				|| m1.colLength() != m2.colLength()) {
+		if (m1.incompatibleDimensions(m2)) {
 			throw new IncompatibleMatrixException("Incompatible dimensions");
-		
 		} 
 		// creates new double matrix of the same dimensions
 		DoubleMatrix temp = new DoubleMatrix(m1.rowLength(), m1.colLength());
@@ -252,6 +250,20 @@ public class DoubleMatrix {
 		setMatrix(negate(this).getMatrix());
 
 	}
+	
+	/**
+	 * Indicate whether this matrix has the same number of rows and columns as another
+	 * @param m 
+	 * 			the other matrix to compare with
+	 * @return
+	 * 			boolean : true or false
+	 */
+	public boolean incompatibleDimensions(DoubleMatrix m) {
+		
+		return m.rowLength() != rowLength()
+				|| m.colLength() != colLength();
+		
+	}
 
 	/**
 	 * Sets the values of the matrix in DoubleMatrix to those in the given
@@ -353,11 +365,8 @@ public class DoubleMatrix {
 		// checks it the dimensions of this matrix are the same as the given
 		// matrix
 		// if not they are not equivalent matrices
-		if(other==null 
-				|| !(other instanceof DoubleMatrix) 
-				||((DoubleMatrix) other).rowLength() != this.rowLength()
-				|| ((DoubleMatrix)other).colLength() != this.colLength()) {
-			
+		if(other == null || !(other instanceof DoubleMatrix) 
+				|| incompatibleDimensions((DoubleMatrix)other)) {
 			return false;
 		}		
 		// checks every element at position (h,i) in this matrix and
