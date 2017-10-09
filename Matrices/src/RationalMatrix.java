@@ -214,8 +214,18 @@ public class RationalMatrix {
 	 *            a rational matrix
 	 */
 	public void add(RationalMatrix m) {
-		this.setMatrix(add(this, m).getMatrix());
-
+		// checks if the row and column length of the two matrices is the same
+		if (incompatibleDimensions(m)){
+			throw new IncompatibleMatrixException("Incompatible dimensions");
+		} 
+		// adds the rational numbers from each matrix at the same position
+		for (int h = 0; h < rowLength(); h++) {
+			for (int i = 0; i < colLength(); i++) {
+				Rational sum = getAt(h, i);
+				sum.add(m.getAt(h, i));
+				setAt(h, i, sum);
+			}
+		}
 	}
 
 	/**
@@ -226,7 +236,19 @@ public class RationalMatrix {
 	 *            a rational matrix
 	 */
 	public void subtract(RationalMatrix m) {
-		setMatrix(subtract(this, m).getMatrix());
+		if (incompatibleDimensions(m)) {
+			throw new IncompatibleMatrixException("Incompatible dimensions");
+		} 
+		// subtracts the rational numbers from each matrix at the same
+		// position
+		for (int h = 0; h < rowLength(); h++) {
+			for (int i = 0; i < colLength(); i++) {
+				Rational diff = getAt(h,i);
+				diff.subtract(m.getAt(h, i));
+				setAt(h, i, diff);
+			}
+		}
+
 	}
 
 	/**
@@ -237,14 +259,30 @@ public class RationalMatrix {
 	 *            rational number
 	 */
 	public void multiply(Rational r) {
-		setMatrix(multiply(this, r).getMatrix());
+		// multiplies the rational number at each position in the matrix by the
+		// scalar
+		for (int h = 0; h < rowLength(); h++) {
+			for (int i = 0; i < colLength(); i++) {
+				Rational prod = getAt(h,i);
+				prod.multiply(r);
+				setAt(h, i, prod);
+			}
+		}
 	}
 
 	/**
 	 * Transposes this matrix using the static transpose method
 	 */
 	public void transpose() {
-		matrix = transpose(this).getMatrix();
+		Rational[][] temp = getMatrix();
+		matrix = new Rational[colLength()][rowLength()];
+		// takes a value from matrix m at each position (h,i)
+		// and places it in the temporary matrix at (i,h)
+		for (int h = 0; h < colLength(); h++) {
+			for (int i = 0; i < rowLength(); i++) {
+				setAt(i, h, temp[h][i]);
+			}
+		}
 
 	}
 
@@ -252,8 +290,14 @@ public class RationalMatrix {
 	 * Negates this matrix using the static negate method
 	 */
 	public void negate() {
-		setMatrix(negate(this).getMatrix());
-
+		// negates every element
+		for (int h = 0; h < rowLength(); h++) {
+			for (int i = 0; i < colLength(); i++) {
+				Rational neg = getAt(h,i);
+				neg.negate();
+				setAt(h, i, neg);
+			}
+		}
 	}
 	
 	/**

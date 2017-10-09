@@ -209,7 +209,16 @@ public class DoubleMatrix {
 	 *            a double matrix
 	 */
 	public void add(DoubleMatrix m){
-		this.setMatrix(add(this, m).getMatrix());
+		// checks if the row and column length of the two matrices is the same
+		if (incompatibleDimensions(m)){
+			throw new IncompatibleMatrixException("Incompatible dimensions");
+		} 
+		// adds the doubles from each matrix at the same position
+		for (int h = 0; h < rowLength(); h++) {
+			for (int i = 0; i < colLength(); i++) {
+				setAt(h, i, getAt(h, i) + m.getAt(h, i));
+			}
+		}
 
 	}
 
@@ -221,7 +230,16 @@ public class DoubleMatrix {
 	 *            a double matrix
 	 */
 	public void subtract(DoubleMatrix m) {
-		setMatrix(subtract(this, m).getMatrix());
+		if (incompatibleDimensions(m)) {
+			throw new IncompatibleMatrixException("Incompatible dimensions");
+		} 
+		// subtracts the double from each matrix at the same
+		// position
+		for (int h = 0; h < rowLength(); h++) {
+			for (int i = 0; i < colLength(); i++) {
+				setAt(h, i, getAt(h,i) - m.getAt(h, i));
+			}
+		}
 	}
 
 	/**
@@ -232,23 +250,40 @@ public class DoubleMatrix {
 	 *            scalar quantity
 	 */
 	public void multiply(double d) {
-		setMatrix(multiply(this, d).getMatrix());
+		// multiplies the double at each position in the matrix by the
+		// scalar
+		for (int h = 0; h < rowLength(); h++) {
+			for (int i = 0; i < colLength(); i++) {
+				setAt(h, i, getAt(h,i) * d);
+			}
+		}
 	}
 
 	/**
 	 * Transposes this matrix using the static transpose method
 	 */
 	public void transpose() {
-		matrix = transpose(this).getMatrix();
-
+		double[][] temp = getMatrix();
+		matrix = new double[colLength()][rowLength()];
+		// takes a value from matrix m at each position (h,i)
+		// and places it in the temporary matrix at (i,h)
+		for (int h = 0; h < colLength(); h++) {
+			for (int i = 0; i < rowLength(); i++) {
+				setAt(i, h, temp[h][i]);
+			}
+		}
 	}
 
 	/**
 	 * Negates this matrix using the static negate method
 	 */
 	public void negate() {
-		setMatrix(negate(this).getMatrix());
-
+		// negates every element
+		for (int h = 0; h < rowLength(); h++) {
+			for (int i = 0; i < colLength(); i++) {
+				setAt(h, i, - 1* getAt(h,i));
+			}
+		}
 	}
 	
 	/**

@@ -160,8 +160,13 @@ public class Rational {
 	 *            other rational number
 	 */
 	public void add(Rational r) {
-		// sets numerator and denominator to new values of sum
-		setAll(add(this, r));
+		// multiplies to get denominator
+		int d = getDenominator() * r.getDenominator();
+		// computes the numerators to be summed
+		int nOne = getNumerator() * r.getDenominator();
+		int nTwo = r.getNumerator() * getDenominator();
+		// creates new rational object with sum of the rationals given
+		setAll(new Rational(nOne + nTwo, d));
 	}
 
 	/**
@@ -172,8 +177,13 @@ public class Rational {
 	 *            other rational number
 	 */
 	public void subtract(Rational r) {
-		// sets numerator and denominator to new values of difference
-		setAll(subtract(this, r));
+		// multiplies to get denominator
+		int d = getDenominator() * r.getDenominator();
+		// computes the numerators to be subtracted
+		int nOne = getNumerator() * r.getDenominator();
+		int nTwo = r.getNumerator() * getDenominator();
+		// creates new rational object with difference of the rationals given
+		setAll(new Rational(nOne - nTwo, d));
 	}
 
 	/**
@@ -184,7 +194,8 @@ public class Rational {
 	 *            other rational number
 	 */
 	public void multiply(Rational r) {
-		setAll(multiply(this, r));
+		setAll(new Rational(getNumerator() * r.getNumerator(),
+				getDenominator() * r.getDenominator()));
 
 	}
 
@@ -196,7 +207,11 @@ public class Rational {
 	 *            other rational number
 	 */
 	public void divide(Rational r) {
-		setAll(divide(this, r));
+		if(r.equals(new Rational(0))){
+			throw new ZeroDenominatorException("Denominator cannot be zero");
+		}
+		setAll(new Rational(getNumerator() * r.getDenominator(),
+				getDenominator() * r.getNumerator()));
 	}
 
 	/**
@@ -205,8 +220,7 @@ public class Rational {
 	 * method
 	 */
 	public void reciprocate() {
-		setAll(reciprocate(this));
-
+		setAll(new Rational(getDenominator(), getNumerator()));
 	}
 
 	/**
@@ -264,6 +278,7 @@ public class Rational {
 		denominator = r.getDenominator();
 		helper();
 	}
+
 
 	/**
 	 * Gives the denominator of this rational number
