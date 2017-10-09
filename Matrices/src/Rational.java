@@ -39,7 +39,7 @@ public class Rational {
 	 * @param numerator
 	 * @param denominator
 	 */
-	public Rational(int numerator, int denominator) {
+	public Rational(int numerator, int denominator){
 		this.numerator = numerator;
 		this.denominator = denominator;
 		helper();
@@ -51,7 +51,7 @@ public class Rational {
 	 * 
 	 * @param other
 	 */
-	public Rational(Rational other) {
+	public Rational(Rational other){
 		this(other.getNumerator(), other.getDenominator());
 	}
 
@@ -66,8 +66,7 @@ public class Rational {
 	 */
 	public static Rational add(Rational r1, Rational r2) {
 		if (r1 == null || r2 == null) {
-			System.out.println("Error: Object is null");
-			System.exit(0);
+			throw new NullPointerException();
 		}
 		// multiplies to get denominator
 		int d = r1.getDenominator() * r2.getDenominator();
@@ -89,8 +88,7 @@ public class Rational {
 	 */
 	public static Rational subtract(Rational r1, Rational r2) {
 		if (r1 == null || r2 == null) {
-			System.out.println("Error: Object is null");
-			System.exit(0);
+			throw new NullPointerException();
 		}
 		// multiplies to get denominator
 		int d = r1.getDenominator() * r2.getDenominator();
@@ -112,8 +110,7 @@ public class Rational {
 	 */
 	public static Rational multiply(Rational r1, Rational r2) {
 		if (r1 == null || r2 == null) {
-			System.out.println("Error: Object is null");
-			System.exit(0);
+			throw new NullPointerException();
 		}
 		return new Rational(r1.getNumerator() * r2.getNumerator(),
 				r1.getDenominator() * r2.getDenominator());
@@ -128,14 +125,12 @@ public class Rational {
 	 *            second rational number
 	 * @return Rational
 	 */
-	public static Rational divide(Rational r1, Rational r2) {
+	public static Rational divide(Rational r1, Rational r2){
 		if (r1 == null || r2 == null) {
-			System.out.println("Error: Object is null");
-			System.exit(0);
+			throw new NullPointerException();
 		}
 		if(r2.equals(new Rational(0))){
-			System.out.println("Error: Denominator cannnot be zero");
-			System.exit(0);
+			throw new ZeroDenominatorException("Denominator cannot be zero");
 		}
 		return new Rational(r1.getNumerator() * r2.getDenominator(),
 				r1.getDenominator() * r2.getNumerator());
@@ -152,8 +147,7 @@ public class Rational {
 
 	public static Rational reciprocate(Rational r) {
 		if (r == null) {
-			System.out.println("Error: Object is null");
-			System.exit(0);
+			throw new NullPointerException();
 		}
 		return new Rational(r.getDenominator(), r.getNumerator());
 
@@ -168,8 +162,7 @@ public class Rational {
 	 */
 	public static Rational negate(Rational r) {
 		if (r == null) {
-			System.out.println("Error: Object is null");
-			System.exit(0);
+			throw new NullPointerException();
 		}
 		return new Rational(-1 * r.getNumerator(), r.getDenominator());
 	}
@@ -303,11 +296,10 @@ public class Rational {
 	 * this is impossible. It is normalized and simplified.
 	 */
 
-	private void helper() {
+	private void helper() throws ZeroDenominatorException{
 		// denominator cannot be zero
 		if (denominator == 0) {
-			System.out.println("Error: Denominator cannnot be zero");
-			System.exit(0);
+			throw new ZeroDenominatorException("Denominator Cannot be zero");
 		}
 		normalize();
 		//check for the exception of a zero 

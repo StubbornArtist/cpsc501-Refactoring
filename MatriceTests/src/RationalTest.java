@@ -3,14 +3,8 @@ import org.junit.Test;
 import org.junit.BeforeClass;
 
 public class RationalTest {
-
 	
-	@BeforeClass
-	public static void setUp(){	
-		System.setSecurityManager(new SystemExitSecurityManager());
-	}
-	
-	@Test(expected = SystemExitSecurityException.class)
+	@Test(expected = ZeroDenominatorException.class)
 	public void zeroDenominator(){
 		new Rational(2,0);
 	}
@@ -122,7 +116,7 @@ public class RationalTest {
 		assertEquals(r, new Rational(3,2));
 	}
 	
-	@Test(expected = SystemExitSecurityException.class)
+	@Test(expected = ZeroDenominatorException.class)
 	public void testDivideByZero(){
 		Rational r = new Rational(1,2);
 		r.divide(new Rational(0));
@@ -191,7 +185,7 @@ public class RationalTest {
 		assertEquals(r, new Rational(2,3));
 	}
 	
-	@Test(expected = SystemExitSecurityException.class)
+	@Test(expected = ZeroDenominatorException.class)
 	public void testReciprocateZero(){
 		Rational r = new Rational(0);
 		r.reciprocate();
@@ -225,7 +219,7 @@ public class RationalTest {
 		assertEquals(r.getDenominator(), 3);
 	}
 	
-	@Test(expected = SystemExitSecurityException.class)
+	@Test(expected = ZeroDenominatorException.class)
 	public void testSetDenominatorToZero(){
 		Rational r = new Rational(1,2);
 		r.setDenominator(0);

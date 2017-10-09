@@ -3,13 +3,7 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 
 public class RationalMatrixTest {
-	
-	
-	@BeforeClass
-	public static void setUp(){
-		System.setSecurityManager(new SystemExitSecurityManager());	
-	}
-	
+		
 	@Test
 	public void testAdd(){
 		RationalMatrix m1 = new RationalMatrix(2,2,new Rational(1));
@@ -19,7 +13,7 @@ public class RationalMatrixTest {
 		assertEquals(m1, m2);
 	}
 	
-	@Test(expected = SystemExitSecurityException.class)
+	@Test(expected = IncompatibleMatrixException.class)
 	public void testAddWithDifferentNumberOfRows(){
 		RationalMatrix m1 = new RationalMatrix(2,2, new Rational(1));
 		m1.add(new RationalMatrix(1,2, new Rational(2)));
@@ -34,7 +28,7 @@ public class RationalMatrixTest {
 		assertEquals(m1, m2);
 	}
 	
-	@Test(expected = SystemExitSecurityException.class)
+	@Test(expected = IncompatibleMatrixException.class)
 	public void testSubtractWithDifferentNumberOfRows(){
 		RationalMatrix m1 = new RationalMatrix(2,2, new Rational(2));
 		m1.subtract(new RationalMatrix(1,2, new Rational(1)));

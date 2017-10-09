@@ -52,6 +52,16 @@ public class DoubleMatrix {
 	}
 
 	/**
+	 * Copy Constructor
+	 * 
+	 * @param other
+	 */
+	public DoubleMatrix(DoubleMatrix other) {
+		this(other.getMatrix());
+	
+	}
+
+	/**
 	 * Constructor which initializes this array with the values and size of a
 	 * given array
 	 * 
@@ -60,16 +70,6 @@ public class DoubleMatrix {
 	public DoubleMatrix(double [][] matrix) {
 		this.matrix = new double[matrix.length][matrix[0].length];
 		setMatrix(matrix);
-	}
-
-	/**
-	 * Copy Constructor
-	 * 
-	 * @param other
-	 */
-	public DoubleMatrix(DoubleMatrix other) {
-		this(other.getMatrix());
-
 	}
 
 	/**
@@ -83,21 +83,18 @@ public class DoubleMatrix {
 	 *            the second double matrix
 	 * @return DoubleMatrix matrix with sum of values in m1 and m2
 	 */
-	public static DoubleMatrix add(DoubleMatrix m1, DoubleMatrix m2) {
+	public static DoubleMatrix add(DoubleMatrix m1, DoubleMatrix m2){
 
-		DoubleMatrix temp = null;
 		// checks if the row and column length of the two matrices is the same
 		if (m1.rowLength() != m2.rowLength()){
-			System.out.println("Incompatible for addition");
-			System.exit(0);
-		} else {
+			throw new IncompatibleMatrixException("Incompatible number of rows");
+		} 
 			// creates new double matrix of the same dimensions
-			temp = new DoubleMatrix(m1.rowLength(), m1.colLength());
-			// adds the doubles from each matrix at the same position
-			for (int h = 0; h < m1.rowLength(); h++) {
-				for (int i = 0; i < m1.colLength(); i++) {
-					temp.setAt(h, i, m1.getAt(h, i) + m2.getAt(h, i));
-				}
+		DoubleMatrix temp = new DoubleMatrix(m1.rowLength(), m1.colLength());
+		// adds the doubles from each matrix at the same position
+		for (int h = 0; h < m1.rowLength(); h++) {
+			for (int i = 0; i < m1.colLength(); i++) {
+				temp.setAt(h, i, m1.getAt(h, i) + m2.getAt(h, i));
 			}
 		}
 
@@ -117,24 +114,19 @@ public class DoubleMatrix {
 	 *         and m2
 	 */
 	public static DoubleMatrix subtract(DoubleMatrix m1, DoubleMatrix m2) {
-
-		DoubleMatrix temp = null;
 		// checks if the row and column length of the two matrices is the same
 		if (m1.rowLength() != m2.rowLength()
 				|| m1.colLength() != m2.colLength()) {
-			
-			System.out.println("Incompatible for subtraction");
-			System.exit(0);
+			throw new IncompatibleMatrixException("Incompatible dimensions");
 		
-		} else {
-			// creates new double matrix of the same dimensions
-			temp = new DoubleMatrix(m1.rowLength(), m1.colLength());
-			// subtracts the doubles from each matrix at the same
-			// position
-			for (int h = 0; h < m1.rowLength(); h++) {
-				for (int i = 0; i < m1.colLength(); i++) {
-					temp.setAt(h, i, m1.getAt(h, i) - m2.getAt(h, i));
-				}
+		} 
+		// creates new double matrix of the same dimensions
+		DoubleMatrix temp = new DoubleMatrix(m1.rowLength(), m1.colLength());
+		// subtracts the doubles from each matrix at the same
+		// position
+		for (int h = 0; h < m1.rowLength(); h++) {
+			for (int i = 0; i < m1.colLength(); i++) {
+				temp.setAt(h, i, m1.getAt(h, i) - m2.getAt(h, i));
 			}
 		}
 
@@ -218,7 +210,7 @@ public class DoubleMatrix {
 	 * @param m
 	 *            a double matrix
 	 */
-	public void add(DoubleMatrix m) {
+	public void add(DoubleMatrix m){
 		this.setMatrix(add(this, m).getMatrix());
 
 	}
@@ -268,12 +260,11 @@ public class DoubleMatrix {
 	 * @param m
 	 *            double matrix
 	 */
-	public void setMatrix(double[][] m) {
+	public void setMatrix(double[][] m){
 		// checks if the dimensions of the new matrix are the same as those of
 		// the original matrix
 		if (m.length != matrix.length || m[0].length != matrix[0].length) {
-			System.out.println("Incompatible matrices");
-			System.exit(0);
+			throw new IncompatibleMatrixException("Incompatible dimensions");
 		}
 		// places the elements from the given matrix in the original matrix
 		for (int h = 0; h < m.length; h++) {

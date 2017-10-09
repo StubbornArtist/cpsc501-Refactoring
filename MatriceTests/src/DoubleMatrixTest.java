@@ -4,11 +4,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class DoubleMatrixTest {
-
-	@BeforeClass
-	public static void setUp(){
-		System.setSecurityManager(new SystemExitSecurityManager());	
-	}
 	
 	@Test
 	public void testAdd(){
@@ -19,7 +14,7 @@ public class DoubleMatrixTest {
 		assertEquals(m1, m2);
 	}
 	
-	@Test(expected = SystemExitSecurityException.class)
+	@Test(expected = IncompatibleMatrixException.class)
 	public void testAddWithDifferentNumberOfRows(){
 		DoubleMatrix m1 = new DoubleMatrix(2,2, 1.0);
 		m1.add(new DoubleMatrix(1,2, 2.0));
@@ -34,7 +29,7 @@ public class DoubleMatrixTest {
 		assertEquals(m1, m2);
 	}
 	
-	@Test(expected = SystemExitSecurityException.class)
+	@Test(expected = IncompatibleMatrixException.class)
 	public void testSubtractWithDifferentNumberOfRows(){
 		DoubleMatrix m1 = new DoubleMatrix(2,2, 2.0);
 		m1.subtract(new DoubleMatrix(1,2, 1.0));

@@ -87,21 +87,17 @@ public class RationalMatrix {
 	 * @return RationalMatrix matrix with sum of values in m1 and m2
 	 */
 	public static RationalMatrix add(RationalMatrix m1, RationalMatrix m2) {
-
-		RationalMatrix temp = null;
 		// checks if the row and column length of the two matrices is the same
 		if (m1.rowLength() != m2.rowLength()){
-			System.out.println("Incompatible for addition");
-			System.exit(0);
-		} else {
-			// creates new rational matrix of the same dimensions
-			temp = new RationalMatrix(m1.rowLength(), m1.colLength());
-			// adds the rational numbers from each matrix at the same position
-			for (int h = 0; h < m1.rowLength(); h++) {
-				for (int i = 0; i < m1.colLength(); i++) {
-					temp.setAt(h, i,
-							Rational.add(m1.getAt(h, i), m2.getAt(h, i)));
-				}
+			throw new IncompatibleMatrixException("Incompatible number of rows");
+		} 
+		// creates new rational matrix of the same dimensions
+		RationalMatrix temp = new RationalMatrix(m1.rowLength(), m1.colLength());
+		// adds the rational numbers from each matrix at the same position
+		for (int h = 0; h < m1.rowLength(); h++) {
+			for (int i = 0; i < m1.colLength(); i++) {
+				temp.setAt(h, i,
+						Rational.add(m1.getAt(h, i), m2.getAt(h, i)));
 			}
 		}
 
@@ -122,24 +118,21 @@ public class RationalMatrix {
 	 */
 	public static RationalMatrix subtract(RationalMatrix m1, RationalMatrix m2) {
 
-		RationalMatrix temp = null;
 		// checks if the row and column length of the two matrices is the same
 		if (m1.rowLength() != m2.rowLength()
 				|| m1.colLength() != m2.colLength()) {
 			
-			System.out.println("Incompatible for subtraction");
-			System.exit(0);
+			throw new IncompatibleMatrixException("Incompatible dimensions");
 		
-		} else {
-			// creates new rational matrix of the same dimensions
-			temp = new RationalMatrix(m1.rowLength(), m1.colLength());
-			// subtracts the rational numbers from each matrix at the same
-			// position
-			for (int h = 0; h < m1.rowLength(); h++) {
-				for (int i = 0; i < m1.colLength(); i++) {
-					temp.setAt(h, i,
-							Rational.subtract(m1.getAt(h, i), m2.getAt(h, i)));
-				}
+		} 
+		// creates new rational matrix of the same dimensions
+		RationalMatrix temp = new RationalMatrix(m1.rowLength(), m1.colLength());
+		// subtracts the rational numbers from each matrix at the same
+		// position
+		for (int h = 0; h < m1.rowLength(); h++) {
+			for (int i = 0; i < m1.colLength(); i++) {
+				temp.setAt(h, i,
+						Rational.subtract(m1.getAt(h, i), m2.getAt(h, i)));
 			}
 		}
 
@@ -277,8 +270,7 @@ public class RationalMatrix {
 		// checks if the dimensions of the new matrix are the same as those of
 		// the original matrix
 		if (m.length != matrix.length || m[0].length != matrix[0].length) {
-			System.out.println("Incompatible matrices");
-			System.exit(0);
+			throw new IncompatibleMatrixException("Incompatible dimensions");
 		}
 		// places the elements from the given matrix in the original matrix
 		for (int h = 0; h < m.length; h++) {
