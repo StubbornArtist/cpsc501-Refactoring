@@ -1,4 +1,3 @@
-
 /**
  * A class to represent a matrix of rational numbers. Contains static methods
  * for the addition, subtraction, multiplication (by scalar quantity),
@@ -55,23 +54,18 @@ public class RationalMatrix {
 	}
 
 	/**
-	 * Constructor which initializes this array with the values and size of a
-	 * given array
-	 * 
-	 * @param matrix
-	 */
-	public RationalMatrix(Rational[][] matrix) {
-		this.matrix = new Rational[matrix.length][matrix[0].length];
-		setMatrix(matrix);
-	}
-
-	/**
 	 * Copy Constructor
 	 * 
 	 * @param other
 	 */
 	public RationalMatrix(RationalMatrix other) {
-		this(other.getMatrix());
+		matrix = new Rational[other.rowLength()][other.colLength()];
+		
+		for(int i = 0; i < other.rowLength(); i++) {
+			for(int j = 0; j < other.colLength(); j++) {
+				other.setAt(i, j, other.getAt(i, j));
+			}
+		}
 
 	}
 
@@ -142,16 +136,15 @@ public class RationalMatrix {
 	 * Transposes this matrix using the static transpose method
 	 */
 	public void transpose() {
-		Rational[][] temp = getMatrix();
-		matrix = new Rational[colLength()][rowLength()];
-		// takes a value from matrix m at each position (h,i)
-		// and places it in the temporary matrix at (i,h)
+		Rational[][] temp = new Rational[colLength()][rowLength()];
+		// takes a value from matrix m at each position (i,h)
+		// and places it in the temporary matrix at (h,i)
 		for (int h = 0; h < colLength(); h++) {
 			for (int i = 0; i < rowLength(); i++) {
-				setAt(i, h, temp[h][i]);
+				temp[h][i] = getAt(i, h); 
 			}
 		}
-
+		matrix = temp;
 	}
 
 	/**
@@ -180,48 +173,6 @@ public class RationalMatrix {
 		return m.rowLength() != rowLength()
 				|| m.colLength() != colLength();
 		
-	}
-
-
-	/**
-	 * Sets the values of the matrix in RationalMatrix to those in the given
-	 * matrix
-	 * 
-	 * @param 
-	 *            rational matrix
-	 */
-	public void setMatrix(Rational[][] m) {
-		// checks if the dimensions of the new matrix are the same as those of
-		// the original matrix
-		if (m.length != matrix.length || m[0].length != matrix[0].length) {
-			throw new IncompatibleMatrixException("Incompatible dimensions");
-		}
-		// places the elements from the given matrix in the original matrix
-		for (int h = 0; h < m.length; h++) {
-			for (int i = 0; i < m[h].length; i++) {
-				this.setAt(h, i, new Rational(m[h][i]));
-			}
-		}
-	}
-
-	/**
-	 * Gives a 2d matrix of type rational that is equal to the matrix stored
-	 * inside this RationalMatrix
-	 * 
-	 * @return Rational[][] the rational matrix stored inside of the
-	 *         RationalMatrix object
-	 */
-	public Rational[][] getMatrix() {
-		// creates a new matrix of type rational with the same dimensions as
-		// this matrix
-		Rational[][] temp = new Rational[matrix.length][matrix[0].length];
-		// places an element at (h,i) in this matrix in the new matrix at (h,i)
-		for (int h = 0; h < matrix.length; h++) {
-			for (int i = 0; i < matrix[h].length; i++) {
-				temp[h][i] = new Rational(this.getAt(h, i));
-			}
-		}
-		return temp;
 	}
 
 	/***

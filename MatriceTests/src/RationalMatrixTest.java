@@ -44,25 +44,50 @@ public class RationalMatrixTest {
 
 	@Test
 	public void testTransposeSquareMatrix(){
-		Rational [][] m = {{new Rational(2), new Rational(1)},{new Rational(3), new Rational(4)}};
-		Rational [][] mt = {{new Rational(2), new Rational(3)},{new Rational(1), new Rational(4)}};
-		RationalMatrix m1 = new RationalMatrix(m);
+		
+		RationalMatrix m1 = new RationalMatrix(2,2);
+		
+		m1.setAt(0, 0, new Rational(2));
+		m1.setAt(0, 1, new Rational(1));
+		m1.setAt(1, 0, new Rational(3));
+		m1.setAt(1, 1, new Rational(4));
+		
+		RationalMatrix m2 = new RationalMatrix(2,2);
+		
+		m2.setAt(0,  0, new Rational(2));
+		m2.setAt(0, 1, new Rational(3));
+		m2.setAt(1,0, new Rational(1));
+		m2.setAt(1, 1, new Rational(4));
+		
 		m1.transpose();
 		
-		assertEquals(m1, new RationalMatrix(mt));
+		assertEquals(m1, m2);
 	}
 	
 	@Test
 	public void testTransposeNonSquareMatrix(){
-		Rational [][] m = {{new Rational(1), new Rational(2)},{new Rational(3), new Rational(4)},
-				{new Rational(5), new Rational(6)}};
-		Rational [][] mt = {{new Rational(1),new Rational(3),new Rational(5)},
-				{new Rational(2),new Rational(4),new Rational(6) }};
-		RationalMatrix m1 = new RationalMatrix(m);
+		
+		RationalMatrix m1 = new RationalMatrix(3,2);
+		
+		m1.setAt(0, 0, new Rational(1));
+		m1.setAt(0, 1, new Rational(2));
+		m1.setAt(1, 0, new Rational(3));
+		m1.setAt(1, 1, new Rational(4));
+		m1.setAt(2, 0, new Rational(5));
+		m1.setAt(2, 1, new Rational(6));
+		
+		RationalMatrix m2 = new RationalMatrix(2,3);
+		
+		m2.setAt(0, 0, new Rational(1));
+		m2.setAt(0, 1, new Rational(3));
+		m2.setAt(0, 2, new Rational(5));
+		m2.setAt(1, 0, new Rational(2));
+		m2.setAt(1, 1, new Rational(4));
+		m2.setAt(1, 2, new Rational(6));
 		
 		m1.transpose();
-		
-		assertEquals(m1,new RationalMatrix(mt));
+
+		assertEquals(m1, m2);
 	}
 	
 	@Test

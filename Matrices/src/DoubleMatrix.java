@@ -57,23 +57,16 @@ public class DoubleMatrix {
 	 * @param other
 	 */
 	public DoubleMatrix(DoubleMatrix other) {
-		this(other.getMatrix());
+		matrix = new double[other.rowLength()][other.colLength()];
+		
+		for(int i = 0; i < other.rowLength(); i++) {
+			for(int j = 0; j < other.colLength(); j++) {
+				other.setAt(i, j, other.getAt(i, j));
+			}
+		}
 	
 	}
-
-	/**
-	 * Constructor which initializes this array with the values and size of a
-	 * given array
-	 * 
-	 * @param matrix
-	 */
-	public DoubleMatrix(double [][] matrix) {
-		this.matrix = new double[matrix.length][matrix[0].length];
-		setMatrix(matrix);
-	}
-
 	
-
 	/**
 	 * Takes a double matrix and adds it's values to those of this matrix
 	 * 
@@ -135,15 +128,15 @@ public class DoubleMatrix {
 	 * Transposes this matrix using the static transpose method
 	 */
 	public void transpose() {
-		double[][] temp = getMatrix();
-		matrix = new double[colLength()][rowLength()];
-		// takes a value from matrix m at each position (h,i)
-		// and places it in the temporary matrix at (i,h)
+		double [][] temp = new double [colLength()][rowLength()];
+		// takes a value from matrix m at each position (i,h)
+		// and places it in the temporary matrix at (h,i)
 		for (int h = 0; h < colLength(); h++) {
 			for (int i = 0; i < rowLength(); i++) {
-				setAt(i, h, temp[h][i]);
+				temp[h][i] = getAt(i,h);
 			}
 		}
+		matrix = temp;
 	}
 
 	/**
@@ -170,47 +163,6 @@ public class DoubleMatrix {
 		return m.rowLength() != rowLength()
 				|| m.colLength() != colLength();
 		
-	}
-
-	/**
-	 * Sets the values of the matrix in DoubleMatrix to those in the given
-	 * matrix
-	 * 
-	 * @param m
-	 *            double matrix
-	 */
-	public void setMatrix(double[][] m){
-		// checks if the dimensions of the new matrix are the same as those of
-		// the original matrix
-		if (m.length != matrix.length || m[0].length != matrix[0].length) {
-			throw new IncompatibleMatrixException("Incompatible dimensions");
-		}
-		// places the elements from the given matrix in the original matrix
-		for (int h = 0; h < m.length; h++) {
-			for (int i = 0; i < m[h].length; i++) {
-				this.setAt(h, i, m[h][i]);
-			}
-		}
-	}
-
-	/**
-	 * Gives a 2d matrix of type double that is equal to the matrix stored
-	 * inside this DoubleMatrix
-	 * 
-	 * @return double[][] the double matrix stored inside of the
-	 *         DoubleMatrix object
-	 */
-	public double[][] getMatrix() {
-		// creates a new matrix of type double with the same dimensions as
-		// this matrix
-		double[][] temp = new double[matrix.length][matrix[0].length];
-		// places an element at (h,i) in this matrix in the new matrix at (h,i)
-		for (int h = 0; h < matrix.length; h++) {
-			for (int i = 0; i < matrix[h].length; i++) {
-				temp[h][i] = this.getAt(h, i);
-			}
-		}
-		return temp;
 	}
 
 	/***

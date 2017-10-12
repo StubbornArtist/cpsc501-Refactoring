@@ -45,23 +45,51 @@ public class DoubleMatrixTest {
 
 	@Test
 	public void testTransposeSquareMatrix(){
-		double [][] m = {{2.0, 1.0},{3.0, 4.0}};
-		double [][] mt = {{2.0, 3.0},{1.0, 4.0}};
-		DoubleMatrix m1 = new DoubleMatrix(m);
+		
+		DoubleMatrix m1 = new DoubleMatrix(2,2);
+		
+		m1.setAt(0, 0, 2.0);
+		m1.setAt(0, 1, 1.0);
+		m1.setAt(1, 0, 3.0);
+		m1.setAt(1, 1, 4.0);
+		
+		DoubleMatrix m2 = new DoubleMatrix(2,2);
+		
+		m2.setAt(0,  0, 2.0);
+		m2.setAt(0, 1, 3.0);
+		m2.setAt(1,0, 1.0);
+		m2.setAt(1, 1, 4.0);
+		
 		m1.transpose();
 		
-		assertEquals(m1, new DoubleMatrix(mt));
+		assertEquals(m1, m2);
 	}
 	
 	@Test
 	public void testTransposeNonSquareMatrix(){
-		double [][] m = {{1.0, 2.0},{3.0, 4.0}, {5.0, 6.0}};
-		double [][] mt = {{1.0, 3.0, 5.0},{2.0, 4.0, 6.0}};
-		DoubleMatrix m1 = new DoubleMatrix(m);
+		DoubleMatrix m1 = new DoubleMatrix(3,2);
+		
+		m1.setAt(0, 0, 1.0);
+		m1.setAt(0, 1, 2.0);
+		m1.setAt(1, 0, 3.0);
+		m1.setAt(1, 1, 4.0);
+		m1.setAt(2, 0, 5.0);
+		m1.setAt(2, 1, 6.0);
+		
+		DoubleMatrix m2 = new DoubleMatrix(2,3);
+		
+		m2.setAt(0, 0, 1.0);
+		m2.setAt(0, 1, 3.0);
+		m2.setAt(0, 2, 5.0);
+		m2.setAt(1, 0, 2.0);
+		m2.setAt(1, 1, 4.0);
+		m2.setAt(1, 2, 6.0);
+
 		
 		m1.transpose();
 		
-		assertEquals(m1,new DoubleMatrix(mt));
+		assertEquals(m1, m2);
+
 	}
 	
 	@Test
