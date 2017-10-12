@@ -242,8 +242,8 @@ public class RationalMatrix {
 		// checks every element at position (h,i) in this matrix and
 		// compares it to the
 		// element in the given matrix at (h,i)
-		for (int h = 0; h < matrix.length; h++) {
-			for (int i = 0; i < matrix[h].length; i++) {
+		for (int h = 0; h < rowLength(); h++) {
+			for (int i = 0; i < colLength(); i++) {
 				if (!this.getAt(h, i).equals(((RationalMatrix)other).getAt(h, i))) {
 					return false;
 				}
@@ -262,13 +262,13 @@ public class RationalMatrix {
 	public String toString() {
 		String temp = "";
 		// runs through each row
-		for (int h = 0; h < matrix.length; h++) {
+		for (int h = 0; h < rowLength(); h++) {
 			// adds each element in the current row to the string
-			for (int i = 0; i < matrix[h].length; i++) {
-				temp += matrix[h][i];
+			for (int i = 0; i < colLength(); i++) {
+				temp += getAt(h,i);
 				// when the last element has not yet been reached a space is
 				// inserted after the element
-				if (i != matrix[h].length - 1) {
+				if (i != colLength() - 1) {
 					temp += " ";
 				}
 
