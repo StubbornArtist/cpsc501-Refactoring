@@ -11,7 +11,7 @@
  * @version 2.0, Mar 02, 2015
  */
 
-public class Rational {
+public class Rational implements MatrixCell<Rational> {
 
 	// instance variables
 	private int numerator;
@@ -63,6 +63,7 @@ public class Rational {
 	 * @param r
 	 *            other rational number
 	 */
+	@Override
 	public void add(Rational r) {
 		// multiplies to get denominator
 		int d = getDenominator() * r.getDenominator();
@@ -80,6 +81,7 @@ public class Rational {
 	 * @param r
 	 *            other rational number
 	 */
+	@Override
 	public void subtract(Rational r) {
 		// multiplies to get denominator
 		int d = getDenominator() * r.getDenominator();
@@ -97,6 +99,7 @@ public class Rational {
 	 * @param r
 	 *            other rational number
 	 */
+	@Override
 	public void multiply(Rational r) {
 		setAll(new Rational(getNumerator() * r.getNumerator(),
 				getDenominator() * r.getDenominator()));
@@ -130,6 +133,7 @@ public class Rational {
 	/**
 	 * Negates this rational number by multiplying the numerator by -1
 	 */
+	@Override
 	public void negate() {
 		setNumerator(numerator * -1);
 	}
