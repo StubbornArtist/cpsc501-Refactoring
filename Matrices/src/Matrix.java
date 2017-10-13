@@ -1,35 +1,12 @@
-/**
- * A class to represent a matrix of rational numbers. Contains static methods
- * for the addition, subtraction, multiplication (by scalar quantity),
- * transposition, and negation of matrices. Contains non static methods for the
- * addition, subtraction, multiplication(by scalar), transposition, and negation
- * of matrices. Also includes an equals method to test the equality of matrices
- * based upon elements in the matrix, and a method which produces a String
- * representation of the matrix.
- * 
- * 
- * @author Ashley Currie
- * @version 2.0, March 2, 2015
- */
 
-public class RationalMatrix {
+public class Matrix<T extends MatrixCell<T> & DeepClonable<T>> {
 
-	// instance variables
-	private Rational[][] matrix;
-
-	/**
-	 * constructor that initializes the matrix length and width to given values
-	 * and zeros in every position
-	 * 
-	 * @param rows
-	 *            number of rows
-	 * @param columns
-	 *            number of columns
-	 */
-	public RationalMatrix(int rows, int columns) {
-		this(rows,columns,new Rational()); 
+	private Array2D<T> matrix;
+	
+	public Matrix(int rows, int columns) {
+		matrix = new Array2D(rows, columns);
 	}
-
+	
 	/**
 	 * Constructor which initializes matrix length and width and a given value
 	 * in every position
@@ -41,14 +18,13 @@ public class RationalMatrix {
 	 * @param initial
 	 *            rational number
 	 */
-
-	public RationalMatrix(int rows, int columns, Rational initial) {
-		matrix = new Rational[rows][columns];
+	public Matrix(int rows, int columns, T initial) {
+		matrix = new Array2D<T>(rows, columns);
 		// takes values from given array and sets them at the same position in
 		// this object's array
 		for (int h = 0; h < rows; h++) {
 			for (int i = 0; i < columns; i++) {
-				this.setAt(h, i, new Rational(initial));
+				setAt(h, i, initial.deepClone());
 			}
 		}
 	}
@@ -58,32 +34,33 @@ public class RationalMatrix {
 	 * 
 	 * @param other
 	 */
-	public RationalMatrix(RationalMatrix other) {
-		matrix = new Rational[other.rowLength()][other.colLength()];
+	public Matrix(Matrix<T> other) {
+		matrix = new Array2D<T>(other.rowLength(), other.colLength());
 		
 		for(int i = 0; i < other.rowLength(); i++) {
 			for(int j = 0; j < other.colLength(); j++) {
-				other.setAt(i, j, other.getAt(i, j));
+				setAt(i, j, other.getAt(i, j));
 			}
+			
 		}
-
 	}
-
+	
 	/**
-	 * Takes a rational matrix and adds it's values to those of this matrix
+	 * Takes a matrix and adds it's values to those of this matrix
 	 * 
 	 * @param m
-	 *            a rational matrix
+	 *            a matrix
 	 */
-	public void add(RationalMatrix m) {
+	public void add(Matrix<T> m) {
 		// checks if the row and column length of the two matrices is the same
 		if (incompatibleDimensions(m)){
+			
 			throw new IncompatibleMatrixException("Incompatible dimensions");
 		} 
 		// adds the rational numbers from each matrix at the same position
 		for (int h = 0; h < rowLength(); h++) {
 			for (int i = 0; i < colLength(); i++) {
-				Rational sum = getAt(h, i);
+				T sum = getAt(h, i);
 				sum.add(m.getAt(h, i));
 				setAt(h, i, sum);
 			}
@@ -91,21 +68,22 @@ public class RationalMatrix {
 	}
 
 	/**
-	 * Takes a rational matrix and subtracts it's values from those of this
+	 * Takes a matrix and subtracts it's values from those of this
 	 * matrix
 	 * 
 	 * @param m
-	 *            a rational matrix
+	 *            a matrix
 	 */
-	public void subtract(RationalMatrix m) {
+	public void subtract(Matrix<T> m) {
 		if (incompatibleDimensions(m)) {
+			
 			throw new IncompatibleMatrixException("Incompatible dimensions");
 		} 
 		// subtracts the rational numbers from each matrix at the same
 		// position
 		for (int h = 0; h < rowLength(); h++) {
 			for (int i = 0; i < colLength(); i++) {
-				Rational diff = getAt(h,i);
+				T diff = getAt(h,i);
 				diff.subtract(m.getAt(h, i));
 				setAt(h, i, diff);
 			}
@@ -114,18 +92,18 @@ public class RationalMatrix {
 	}
 
 	/**
-	 * Takes a rational number and multiplies every element in this matrix by
+	 * Takes a matrix member and multiplies every element in this matrix by
 	 * that rational
 	 * 
 	 * @param r
-	 *            rational number
+	 *            matrix member
 	 */
-	public void multiply(Rational r) {
+	public void multiply(T r) {
 		// multiplies the rational number at each position in the matrix by the
 		// scalar
 		for (int h = 0; h < rowLength(); h++) {
 			for (int i = 0; i < colLength(); i++) {
-				Rational prod = getAt(h,i);
+				T prod = getAt(h,i);
 				prod.multiply(r);
 				setAt(h, i, prod);
 			}
@@ -136,12 +114,12 @@ public class RationalMatrix {
 	 * Transposes this matrix using the static transpose method
 	 */
 	public void transpose() {
-		Rational[][] temp = new Rational[colLength()][rowLength()];
-		// takes a value from matrix m at each position (i,h)
-		// and places it in the temporary matrix at (h,i)
+		Array2D<T> temp = new Array2D<T>(colLength(), rowLength()); 
+		// takes a value from matrix m at each position (h,i)
+		// and places it in the temporary matrix at (i,h)
 		for (int h = 0; h < colLength(); h++) {
 			for (int i = 0; i < rowLength(); i++) {
-				temp[h][i] = getAt(i, h); 
+				temp.set(h, i, getAt(i,h));
 			}
 		}
 		matrix = temp;
@@ -154,12 +132,13 @@ public class RationalMatrix {
 		// negates every element
 		for (int h = 0; h < rowLength(); h++) {
 			for (int i = 0; i < colLength(); i++) {
-				Rational neg = getAt(h,i);
+				T neg = getAt(h,i);
 				neg.negate();
 				setAt(h, i, neg);
 			}
 		}
 	}
+	
 	
 	/**
 	 * Indicate whether this matrix has the same number of rows and columns as another
@@ -168,7 +147,7 @@ public class RationalMatrix {
 	 * @return
 	 * 			boolean : true or false
 	 */
-	public boolean incompatibleDimensions(RationalMatrix m) {
+	public boolean incompatibleDimensions(Matrix<T> m) {
 		
 		return m.rowLength() != rowLength()
 				|| m.colLength() != colLength();
@@ -185,22 +164,22 @@ public class RationalMatrix {
 	 * @param r
 	 *            rational number to be substituted in
 	 */
-	public void setAt(int row, int column, Rational r) {
-		matrix[row][column] = r;
+	public void setAt(int row, int column, T r) {
+		matrix.set(row, column, r);
 	}
 
 	/**
-	 * Gives the rational number at the specified position in the rational
+	 * Gives the matrix cell at the specified position in the
 	 * matrix
 	 * 
 	 * @param row
 	 *            the position in the row
 	 * @param column
 	 *            the position in the column
-	 * @return Rational the rational number at the specified index
+	 * @return T the matrix cell at the specified index
 	 */
-	public Rational getAt(int row, int column) {
-		return new Rational(matrix[row][column]);
+	public T getAt(int row, int column) {
+		return matrix.get(row, column).deepClone();
 	}
 
 	/**
@@ -209,7 +188,7 @@ public class RationalMatrix {
 	 * @return int column length
 	 */
 	public int colLength() {
-		return matrix[0].length;
+		return matrix.columns();
 	}
 
 	/**
@@ -218,14 +197,14 @@ public class RationalMatrix {
 	 * @return int row length
 	 */
 	public int rowLength() {
-		return matrix.length;
+		return matrix.rows();
 	}
 
 	/**
-	 * Compares this rational matrix to any given matrix
+	 * Compares this matrix to any given matrix
 	 * 
 	 * @param other
-	 *            another rational matrix
+	 *            another matrix
 	 * @return boolean if both matrices have the same values at the same
 	 *         positions the n it returns true
 	 */
@@ -234,8 +213,8 @@ public class RationalMatrix {
 		// checks it the dimensions of this matrix are the same as the given
 		// matrix
 		// if not they are not equivalent matrices
-		if(other==null || !(other instanceof RationalMatrix) 
-				|| incompatibleDimensions((RationalMatrix) other)){
+		if(other==null || !(other instanceof Matrix<?>) 
+				|| incompatibleDimensions((Matrix<T>) other)){
 			
 			return false;
 		}		
@@ -244,7 +223,7 @@ public class RationalMatrix {
 		// element in the given matrix at (h,i)
 		for (int h = 0; h < rowLength(); h++) {
 			for (int i = 0; i < colLength(); i++) {
-				if (!this.getAt(h, i).equals(((RationalMatrix)other).getAt(h, i))) {
+				if (!getAt(h, i).equals(((Matrix<T>)other).getAt(h, i))) {
 					return false;
 				}
 			}
@@ -254,7 +233,7 @@ public class RationalMatrix {
 	}
 
 	/**
-	 * Creates a string representation of the rational matrix
+	 * Creates a string representation of the matrix
 	 * 
 	 * @return temp (String)
 	 */
@@ -279,4 +258,3 @@ public class RationalMatrix {
 		return temp;
 	}
 }
-

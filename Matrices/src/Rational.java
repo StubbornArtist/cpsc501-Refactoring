@@ -11,7 +11,7 @@
  * @version 2.0, Mar 02, 2015
  */
 
-public class Rational implements MatrixCell<Rational> {
+public class Rational implements MatrixCell<Rational>, DeepClonable<Rational> {
 
 	// instance variables
 	private int numerator;
@@ -291,6 +291,12 @@ public class Rational implements MatrixCell<Rational> {
 		
 		return denominator == ((Rational)other).getDenominator()
 				&& numerator ==((Rational)other).getNumerator();
+	}
+	
+	@Override
+	public Rational deepClone() {
+		// TODO Auto-generated method stub
+		return new Rational(this);
 	}
 }
 
